@@ -1,0 +1,21 @@
+//---------------------------------------------------------------------------
+
+#ifndef Unit2H
+#define Unit2H
+#include <Windows.h>
+#include <winsock2.h>
+
+class tcp
+{
+	private :
+	SOCKET sock;
+	public :
+	tcp(SOCKET sock);
+	~tcp();
+	void WriteDigitalOutput();
+	void TrameEnvoiTest();
+	void TrameEnvoiWriteDebitZ();
+	void TrameEnvoiReadTemp();
+};
+//---------------------------------------------------------------------------
+#endif

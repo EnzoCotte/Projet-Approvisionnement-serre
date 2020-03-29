@@ -1,0 +1,164 @@
+//---------------------------------------------------------------------------
+
+#include <vcl.h>
+#pragma hdrstop
+
+#include "Unit1.h"
+//---------------------------------------------------------------------------
+#pragma package(smart_init)
+#pragma resource "*.dfm"
+#include "Unit1.h"
+#include <stdio.h>
+#include <vector>
+ #include "Windows.h"
+#include "windows.h"
+#include <stdlib.h>
+#include <stdint.h>
+#include <tchar.h>
+#include <iostream>
+#include <fstream>
+#include <string>
+#include <sstream>
+#include <vcl.h>
+#pragma hdrstop
+#include <winsock2.h>
+
+TForm1 *Form1;
+//---------------------------------------------------------------------------
+__fastcall TForm1::TForm1(TComponent* Owner)
+	: TForm(Owner)
+{
+}
+//---------------------------------------------------------------------------
+void __fastcall TForm1::ConnexionClick(TObject *Sender)
+
+{
+	#if defined (WIN32)
+		WSADATA WSAData;
+		int erreur = WSAStartup(MAKEWORD(2,2), &WSAData);
+	#else
+		int erreur = 0;
+	#endif
+
+	SOCKADDR_IN sin;
+	if(!erreur)
+	{
+		/* Création de la socket */
+		sock = socket(AF_INET, SOCK_STREAM, 0);
+
+		/* Configuration de la connexion */
+		sin.sin_addr.s_addr = inet_addr("192.168.1.36");//ip du client test
+		sin.sin_family = AF_INET;
+		sin.sin_port = htons(502);//port
+
+		/* Si le client arrive à se connecter */
+		if(connect(sock, (SOCKADDR*)&sin, sizeof(sin)) != SOCKET_ERROR)
+		{
+			Label1->Caption = "Connecté";
+			tcp_ = new tcp(sock);
+		}
+		else
+		{
+		 // connexion non valide
+		}
+
+	}
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm1::ButtonReadCompteurClick(TObject *Sender)
+{
+	tcp_->TrameEnvoiTest();
+	trame = recv(sock, receive, sizeof(receive),0);
+	for (int i = 0; i < 6+receive[5]; i++)
+	{
+		vecteur.push_back(receive[i]);
+	}
+
+	UINT32 valeur = (receive[9] << 24) | (receive[10] << 16) | (receive[11] << 8) | receive[12];
+	Memo1->Lines->Add(UnicodeString(valeur));
+    vecteur.clear();
+}
+
+//---------------------------------------------------------------------------
+
+
+void __fastcall TForm1::ButtonChangeCompteurClick(TObject *Sender)
+{
+	tcp_->TrameEnvoiWriteDebitZ();
+	trame = recv(sock, receive, sizeof(receive),0);
+	/*for (int i = 0; i < 6+receive[5]; i++)
+	{
+		vecteur.push_back(receive[i]);
+	}
+
+	for(int i = 0; i < vecteur.size(); i++)
+	{
+		Memo1->Lines->Add(UnicodeString(vecteur[i]));
+	}*/
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm1::ButtonReadTempClick(TObject *Sender)
+{
+	tcp_->TrameEnvoiReadTemp();
+	trame = recv(sock, receive, sizeof(receive),0);
+	for (int i = 0; i < 6+receive[5]; i++)
+	{
+		vecteurTemp.push_back(receive[i]);
+	}
+	int16_t valeur = (receive[9] << 8) | receive[10]; //encode la temperature sur 16 bits
+	temperature = ((float)valeur)/10;  //conversion de la temperature en float
+	Memo2->Lines->Add(UnicodeString(temperature)); //on affiche la temperature
+	vecteurTemp.clear();
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm1::ButtonOutput1ONClick(TObject *Sender)
+{
+	tcp_->WriteDigitalOutput1ON();
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm1::ButtonOutput1OFFClick(TObject *Sender)
+{
+	tcp_->WriteDigitalOutput1OFF();
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm1::ButtonOutput2ONClick(TObject *Sender)
+{
+	tcp_->WriteDigitalOutput2ON();
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm1::ButtonOutput2OFFClick(TObject *Sender)
+{
+	tcp_->WriteDigitalOutput2OFF();
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm1::ButtonReadOutput1Click(TObject *Sender)
+{
+	tcp_->ReadOutput1();
+	trame = recv(sock, receive, sizeof(receive),0);
+	for (int i = 0; i < 6+receive[5]; i++)
+	{
+		vecteur.push_back(receive[i]);
+		Memo1->Lines->Add(UnicodeString(vecteur[i]));
+	}
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm1::Button1Click(TObject *Sender)
+{
+    tcp_->ReadOutput2();
+	trame = recv(sock, receive, sizeof(receive),0);
+	for (int i = 0; i < 6+receive[5]; i++)
+	{
+		vecteur.push_back(receive[i]);
+		Memo1->Lines->Add(UnicodeString(vecteur[i]));
+	}
+}
+//---------------------------------------------------------------------------
+

@@ -1,0 +1,131 @@
+object Form1: TForm1
+  Left = 0
+  Top = 0
+  Caption = 'Form1'
+  ClientHeight = 367
+  ClientWidth = 682
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  OldCreateOrder = False
+  PixelsPerInch = 96
+  TextHeight = 13
+  object Label1: TLabel
+    Left = 320
+    Top = 152
+    Width = 57
+    Height = 13
+    Caption = 'Deconnect'#233
+  end
+  object Connexion: TButton
+    Left = 248
+    Top = 72
+    Width = 75
+    Height = 25
+    Caption = 'Connexion'
+    TabOrder = 0
+    OnClick = ConnexionClick
+  end
+  object ButtonReadCompteur: TButton
+    Left = 376
+    Top = 72
+    Width = 99
+    Height = 25
+    Caption = 'Lecture compteur'
+    TabOrder = 1
+    OnClick = ButtonReadCompteurClick
+  end
+  object Memo1: TMemo
+    Left = 32
+    Top = 16
+    Width = 185
+    Height = 177
+    Lines.Strings = (
+      'Memo1')
+    TabOrder = 2
+  end
+  object Memo2: TMemo
+    Left = 489
+    Top = 16
+    Width = 185
+    Height = 193
+    Lines.Strings = (
+      'Memo2')
+    TabOrder = 3
+  end
+  object ButtonChangeCompteur: TButton
+    Left = 288
+    Top = 215
+    Width = 113
+    Height = 25
+    Caption = 'ChangerCompteur'
+    TabOrder = 4
+    OnClick = ButtonChangeCompteurClick
+  end
+  object ButtonReadTemp: TButton
+    Left = 288
+    Top = 263
+    Width = 113
+    Height = 25
+    Caption = 'Lecture temperature'
+    TabOrder = 5
+    OnClick = ButtonReadTempClick
+  end
+  object ButtonOutput1ON: TButton
+    Left = 56
+    Top = 215
+    Width = 129
+    Height = 25
+    Caption = 'Mettre sur ON output 1'
+    TabOrder = 6
+    OnClick = ButtonOutput1ONClick
+  end
+  object ButtonOutput1OFF: TButton
+    Left = 56
+    Top = 263
+    Width = 129
+    Height = 25
+    Caption = 'Mettre sur OFF output 1'
+    TabOrder = 7
+    OnClick = ButtonOutput1OFFClick
+  end
+  object ButtonOutput2ON: TButton
+    Left = 545
+    Top = 215
+    Width = 129
+    Height = 25
+    Caption = 'Mettre sur ON output 2'
+    TabOrder = 8
+    OnClick = ButtonOutput2ONClick
+  end
+  object ButtonOutput2OFF: TButton
+    Left = 545
+    Top = 263
+    Width = 129
+    Height = 25
+    Caption = 'Mettre sur OFF output 2'
+    TabOrder = 9
+    OnClick = ButtonOutput2OFFClick
+  end
+  object ButtonReadOutput1: TButton
+    Left = 56
+    Top = 302
+    Width = 129
+    Height = 25
+    Caption = 'Read output 1'
+    TabOrder = 10
+    OnClick = ButtonReadOutput1Click
+  end
+  object Button1: TButton
+    Left = 545
+    Top = 302
+    Width = 129
+    Height = 25
+    Caption = 'Read output 2'
+    TabOrder = 11
+    OnClick = Button1Click
+  end
+end

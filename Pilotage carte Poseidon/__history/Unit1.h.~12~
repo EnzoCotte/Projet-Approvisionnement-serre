@@ -1,0 +1,56 @@
+//---------------------------------------------------------------------------
+
+#ifndef Unit1H
+#define Unit1H
+//---------------------------------------------------------------------------
+#include <System.Classes.hpp>
+#include <Vcl.Controls.hpp>
+#include <Vcl.StdCtrls.hpp>
+#include <Vcl.Forms.hpp>
+
+#include "Unit2.h"
+#include <Vcl.ExtCtrls.hpp>
+#include <vector>
+#include <Vcl.ExtCtrls.hpp>
+//---------------------------------------------------------------------------
+class TForm1 : public TForm
+{
+__published:	// Composants gérés par l'EDI
+	TButton *Connexion;
+	TLabel *Label1;
+	TButton *ButtonReadCompteur;
+	TMemo *Memo1;
+	TMemo *Memo2;
+	TButton *ButtonChangeCompteur;
+	TButton *ButtonReadTemp;
+	TButton *ButtonOutput1ON;
+	TButton *ButtonOutput1OFF;
+	TButton *ButtonOutput2ON;
+	TButton *ButtonOutput2OFF;
+	TButton *ButtonReadOutput1;
+	TButton *Button1;
+	void __fastcall ConnexionClick(TObject *Sender);
+	void __fastcall ButtonReadCompteurClick(TObject *Sender);
+	void __fastcall ButtonChangeCompteurClick(TObject *Sender);
+	void __fastcall ButtonReadTempClick(TObject *Sender);
+	void __fastcall ButtonOutput1ONClick(TObject *Sender);
+	void __fastcall ButtonOutput1OFFClick(TObject *Sender);
+	void __fastcall ButtonOutput2ONClick(TObject *Sender);
+	void __fastcall ButtonOutput2OFFClick(TObject *Sender);
+	void __fastcall ButtonReadOutput1Click(TObject *Sender);
+	void __fastcall Button1Click(TObject *Sender);
+private:	// Déclarations utilisateur
+	SOCKET sock;
+	tcp* tcp_;
+	int trame;
+	UINT8 receive[1024];
+	std::vector <UINT8> vecteur;
+	std::vector <UINT8> vecteurTemp;
+	float temperature;
+public:		// Déclarations utilisateur
+	__fastcall TForm1(TComponent* Owner);
+};
+//---------------------------------------------------------------------------
+extern PACKAGE TForm1 *Form1;
+//---------------------------------------------------------------------------
+#endif
